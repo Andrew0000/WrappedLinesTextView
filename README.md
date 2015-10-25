@@ -1,0 +1,1 @@
+You can use WrappedLinesTextView as TextView, and forget about measuring max lines manually
