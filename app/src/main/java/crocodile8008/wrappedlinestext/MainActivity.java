@@ -2,10 +2,15 @@ package crocodile8008.wrappedlinestext;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.RelativeSizeSpan;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import crocodile8008.wrappedlinestextlib.WrappedLinesTextView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -19,12 +24,15 @@ public class MainActivity extends AppCompatActivity {
         textView = (TextView) findViewById(R.id.tv1);
         changer = new LayoutSizeChanger(textView);
 
+        setSpan();
+
         changeSizeProgressive();
     }
 
-    public void onDestroy() {
-        textView.removeCallbacks(changer);
-        super.onDestroy();
+    private void setSpan() {
+        Spannable span = new SpannableString(textView.getText());
+        span.setSpan(new RelativeSizeSpan(2.0f), 15, 18, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        textView.setText(span);
     }
 
     // Method for demonstrating lines count changing with layout height changing
@@ -32,6 +40,11 @@ public class MainActivity extends AppCompatActivity {
         for (int i = 0; i < 200; i++) {
             textView.postDelayed(changer, i * 30);
         }
+    }
+
+    public void onDestroy() {
+        textView.removeCallbacks(changer);
+        super.onDestroy();
     }
 
     private class LayoutSizeChanger implements Runnable {

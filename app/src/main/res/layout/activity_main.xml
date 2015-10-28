@@ -15,8 +15,9 @@
     <crocodile8008.wrappedlinestextlib.WrappedLinesTextView
         android:id="@+id/tv1"
         android:background="#1000"
-        android:text="Hello World!\nHello World!\nHello World!\nHello World!\nHello World!\nHello World!\nHello World!\nHello World!\nHello World!\nHello World!\nHello World!\nHello World!\nHello World!\nHello World!\nHello World!\nHello World!\nHello World!\nHello World!\nHello World!\nHello World!\nHello World!\nHello World!\nHello World!\nHello World!\n"
-        android:layout_width="wrap_content"
+        android:textSize="32sp"
+        android:text="q Hello World!\nq Hello World!\nq Hello World!\nq Hello World!\nq Hello World!\nq Hello World!\nq Hello World!\nq Hello World!\nq Hello World!\nq Hello World!\nq Hello World!\n"
+        android:layout_width="match_parent"
         android:layout_height="60dp"/>
 
 </RelativeLayout>
