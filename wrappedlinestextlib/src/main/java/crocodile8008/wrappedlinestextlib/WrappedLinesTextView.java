@@ -24,10 +24,16 @@ public class WrappedLinesTextView extends TextView {
     @Retention(RetentionPolicy.SOURCE)
     public @interface CalcType {}
 
-    /** Measuring type based on dividing */
+    /**
+     * Measuring type based on dividing.
+     */
     public static final int CALC_TYPE_DIVIDE = 0;
 
-    /** Measuring type based on {@link android.text.Layout#getLineForVertical(int)} */
+    /**
+     * Measuring type based on {@link android.text.Layout#getLineForVertical(int)}.
+     * <br>
+     * <b>Note: It's not correctly handling height changing!</b>
+     */
     public static final int CALC_TYPE_GET_FOR_VERTICAL = 1;
 
     /** Tag for logging */
@@ -40,7 +46,7 @@ public class WrappedLinesTextView extends TextView {
     private boolean isRequestLayoutDenied;
 
     /** Current type of lines measuring algorithm */
-    @CalcType private int currentCalcType = CALC_TYPE_GET_FOR_VERTICAL;
+    @CalcType private int currentCalcType = CALC_TYPE_DIVIDE;
 
     //region Constructors
 
@@ -90,14 +96,25 @@ public class WrappedLinesTextView extends TextView {
         }
     }
 
+    /**
+     * See {@link #CALC_TYPE_GET_FOR_VERTICAL}
+     */
     private void calcLinesCountFromVertical() {
-        int linesInHeight = getLayout().getLineForVertical(getHeight());
+        // subtract and increase by one for special cases, it's not mistake
+        int linesInHeight = getLayout().getLineForVertical(getHeightWithoutTopPadding() - getOneLineHeight()) + 1;
         setNewLinesCntIfNeeded(linesInHeight);
     }
 
+    /**
+     * See {@link #CALC_TYPE_DIVIDE}
+     */
     private void calcLinesCountFromDivide() {
-        int linesInHeight = getHeight() / getOneLineHeight();
+        int linesInHeight = getHeightWithoutTopPadding() / getOneLineHeight();
         setNewLinesCntIfNeeded(linesInHeight);
+    }
+
+    private int getHeightWithoutTopPadding() {
+        return getHeight() - getPaddingTop();
     }
 
     private void setNewLinesCntIfNeeded(int linesInHeight) {
